@@ -4,7 +4,7 @@ $Credentials = Get-Credential -Prompt
 
 Connect-AzAccount -ServicePrincipal -Credential $Credentials -TenantID $TenantID -Subscription $SubscriptionID
 
-$ResourceGroup = 'Modul-03'
+$ResourceGroup = 'Modul-03-TB'
 $ResourceDirectory = 'C:\IAC-TISIP-2022'
 
 New-AzResourceGroup -Name $ResourceGroup -Location 'West Europe' -Force
