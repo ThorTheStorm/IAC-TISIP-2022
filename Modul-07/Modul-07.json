@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+            "accountName": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 24,
+                "metadata": {
+                    "description": "Account name for parent storage account"
+                }
+            },
+            "apiVersion": {
+                "type": "string",
+                "allowedValues": ["2015-05-01-preview", "2015-06-15", "2016-01-01", "2016-05-01", "2016-12-01", "2017-06-01", "2017-10-01", "2018-02-01", "2018-03-01-preview", "2018-07-01", "2018-11-01", "2019-04-01", "2019-06-01", "2020-08-01-preview", "2021-01-01", "2021-02-01", "2021-04-01", "2021-06-01", "2021-08-01"],
+                "defaultValue": "2019-06-01",
+                "metadata": {
+                    "description": "Selection for Azure API-version"
+                }
+            },
+            "storageCount": {
+                "type": "int",
+                "defaultValue": 5
+            },
+            "storages": {
+                "type": "array",
+                "defaultvalue": [
+                    "dev",
+                    "prod",
+                    "qa"
+                ]
+            },
+            "containerCount": {
+                "type": "int",
+                "defaultValue": 5
+            },
+            //Defines possible storage configurations
+            "storageSKU": {
+                "type": "string",
+                "defaultValue": "Standard_LRS",
+                "allowedValues": ["Standard_LRS","Standard_GRS","Standard_ZRS","Premium_LRS"],
+                "metadata": {
+                    "description": "Gives select options for storage configuration on storage account"
+                }
+            }
+        },
+        "variables": {
+            //"accountName": "[concat(parameters('accountname'), parameters('environment'))]"
+            //"planName": "[concat(parameters('planName'), parameters('environment'))]",
+            //"webAppName": "[concat(parameters('webAppName'), parameters('environment'))]"
+            "copy": [
+                {
+                    "name": "containerNames",
+                    "count": "[parameters('containerCount')]",
+                    "input": ""
+                }
+
+            ]
+        },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[parameters('apiVersion')]",
+            "name": "[concat(parameters('accountName'), parameters('storages')[copyIndex('copyStorage', 1)])]",
+            "location": "[resourceGroup().location]",
+            "kind": "StorageV2",
+            "sku": {
+                "name": "[parameters('storageSKU')]"
+            },
+            "copy": {
+                "name": "copyStorage",
+                "count": "[length(parameters('storages'))]"
+            }
+        },
+        {
+        "type": "Microsoft.Storage/storageAccounts/blobServices/Containers",
+            "apiVersion": "[parameters('apiVersion')]",
+            "name": "[concat(default/output",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', concat(parameters('accountName'), parameters('storages')[copyIndex('copyStorage', 1)]))]"
+            ]
+        }
+    ],  
+                        
+    "outputs": {}
+}
