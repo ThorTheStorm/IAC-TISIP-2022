@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+        "parameters": {
+            "accountName": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 24,
+                "metadata": {
+                    "description": "Account name for storage account"
+                }
+            },
+            "apiVersion": {
+                "type": "string",
+                "allowedValues": ["2015-05-01-preview", "2015-06-15", "2016-01-01", "2016-05-01", "2016-12-01", "2017-06-01", "2017-10-01", "2018-02-01", "2018-03-01-preview", "2018-07-01", "2018-11-01", "2019-04-01", "2019-06-01", "2020-08-01-preview", "2021-01-01", "2021-02-01", "2021-04-01", "2021-06-01", "2021-08-01"],
+                "defaultValue": "2015-06-15",
+                "metadata": {
+                    "description": "Selection for Azure API-version"
+                }
+            },
+            //Defines possible storage configurations
+            "storageSKU": {
+                "type": "string",
+                "defaultValue": "Standard_LRS",
+                "allowedValues": ["Standard_LRS","Standard_GRS","Standard_ZRS","Premium_LRS"],
+                "metadata": {
+                    "description": "Gives select options for storage configuration on storage account"
+                }
+            }
+        },
+        //"variables": {
+          //  "accountName": "[concat(parameters('accountName'), uniqueString(resourceGroup().id, subscription().tenantId))]"
+        //},
+        "resources": [
+            {
+                "name": "[parameters('accountName')]",
+                "type": "Microsoft.Storage/storageAccounts",
+                "apiVersion": "[parameters('apiVersion')]",
+                "location": "[resourceGroup().location]",
+                "tags": {
+                    "displayName": "storageaccount1"
+                },
+                "properties": {
+                    "accountType": "[parameters('storageSKU')]" 
+                }
+            }
+        ],
+        "outputs": {
+            "Name": {
+                "type": "string",
+                "value": "[parameters('accountName')]"
+            }
+        }
+}

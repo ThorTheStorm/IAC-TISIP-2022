@@ -1,6 +1,6 @@
 #Variables
-$ResourceGroup = 'Modul-05-TB'
-$ResourceDirectory = 'C:\IAC-TISIP-2022\Modul-05'
+$ResourceGroup = 'Modul-07-TB-TEST'
+$ResourceDirectory = 'C:\IAC-TISIP-2022\Modul-07'
 $UserInput = $null
 
 #Create Azure resource group
@@ -11,16 +11,9 @@ New-AzResourceGroup `
 
 #Create group deployment
 New-AzResourceGroupDeployment `
-    -Name 'M-05-TB-DEV' `
     -ResourceGroupName $ResourceGroup `
-    -TemplateFile "$ResourceDirectory\Modul-05.json" `
-    -TemplateParameterFile "$ResourceDirectory\Modul-05-dev.parameters.json" 
-
-New-AzResourceGroupDeployment `
-    -Name 'M-05-TB-PROD' `
-    -ResourceGroupName $ResourceGroup `
-    -TemplateFile "$ResourceDirectory\Modul-05.json" `
-    -TemplateParameterFile "$ResourceDirectory\Modul-05-prod.parameters.json" 
+    -TemplateFile "$ResourceDirectory\Modul-07.json" `
+    -TemplateParameterFile "$ResourceDirectory\Modul-07-DEV.parameters.json" 
 
 #Gets user-input y/n for deletion of resource
 Write-Host -ForegroundColor Cyan 'Resource Created. Verify resource before continuing...'

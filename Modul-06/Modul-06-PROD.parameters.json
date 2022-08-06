@@ -1,0 +1,24 @@
+{
+    "schema": "https://schema.management.azure.com/schemas/201/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "accountName": {
+            "value": "m06tbstorage05"
+        },
+        "planName": {
+            "value": "m06tbstorage05"
+        },
+        "webappName": {
+            "value": "m06tbstorage05"
+        },
+        "environment": {
+            "value": "prod"
+        },
+        "storageSKU": {
+            "value": "Premium_LRS"
+        },
+        "apiVersion": {
+            "value": "2019-06-01"
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [{
+        "name": "[parameters('accountName')]",
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "[parameters('apiVersion')]",
+        "location": "[resourceGroup().location]",
+        "tags": {
+        "displayName": "storageaccount1"
+    }],
+    "outputs": {
+        "uniqueString": {
+            "value": "[uniqueString(resourceGroup().id)]",
+            "type": "string"
+        }
+    }
+}
